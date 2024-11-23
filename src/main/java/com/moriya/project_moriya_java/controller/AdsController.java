@@ -63,7 +63,7 @@ public class AdsController {
             Ads newAd = new Ads();
             Categories category = categoriesRepository.findById(adDto.getCategory().getId())
                     .orElseThrow(() -> new RuntimeException("Category not found"));
-
+            newAd.setId(adDto.getId());
             newAd.setUserId(adDto.getUserId());
             newAd.setCategory(category);
             newAd.setDatePosted(adDto.getDatePosted());
@@ -101,6 +101,7 @@ public class AdsController {
 
             // יצירת AdsDto והעתקת הנתונים
             AdsDto adsDto = new AdsDto();
+            adsDto.setId(ad.getId());
             adsDto.setUserId(ad.getUserId());
             adsDto.setCategory(ad.getCategory());
             adsDto.setDatePosted(ad.getDatePosted());
@@ -140,6 +141,7 @@ public class AdsController {
 
         // יצירת אובייקט AdsDto והעתקת נתונים מהמודעה
         AdsDto adsDto = new AdsDto();
+        adsDto.setId(ad.getId());
         adsDto.setUserId(ad.getUserId());
         adsDto.setCategory(ad.getCategory());
         adsDto.setDatePosted(ad.getDatePosted());

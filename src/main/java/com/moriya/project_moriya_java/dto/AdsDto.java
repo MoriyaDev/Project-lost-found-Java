@@ -8,6 +8,16 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class AdsDto {
+    private  Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     private Long userId;
     private Categories category;
     @NotNull(message = "Date Posted is required")

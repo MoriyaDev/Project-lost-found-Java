@@ -4349,3 +4349,9 @@ Caused by: java.lang.IllegalArgumentException: 1
 	at org.h2.util.DateTimeUtils.parseDateValue(DateTimeUtils.java:187)
 	at org.h2.value.ValueDate.parse(ValueDate.java:51)
 	... 54 more
+2024-11-23 22:35:03.984885+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (MSGS: ""SENDERID"" BIGINT)"; SQL statement:
+INSERT INTO "PUBLIC"."MSGS"("SENT_AT","AD_ID","ADID","ID","SENDERID","MESSAGE_TEXT")VALUES(?,?,?,?,?,?) [22018-224]
+2024-11-23 22:35:04.019676+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (MSGS: ""SENDERID"" BIGINT)"; SQL statement:
+INSERT INTO "PUBLIC"."MSGS"("SENT_AT","AD_ID","ADID","ID","SENDERID","MESSAGE_TEXT")VALUES(?,?,?,?,?,?) [22018-224]
