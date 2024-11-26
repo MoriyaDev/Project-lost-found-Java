@@ -7,6 +7,7 @@ import com.moriya.project_moriya_java.service.AdsRepository;
 import com.moriya.project_moriya_java.service.CategoriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,17 +41,22 @@ public class AdsController {
         this.adsRepository = adsRepository;
     }
 
-    @PostMapping("/upload")
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Ads> upload(@RequestPart("ad") Ads ad,
                                       @RequestPart("image") MultipartFile file) throws IOException {
+        System.out.println("Received Ad: " + ad);
+        System.out.println("Received File: " + file.getOriginalFilename());
+        if (ad == null || file.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // טיפול בשגיאה אם יש שדות חסרים
+        }
 
-        Path pathFile=Paths.get(DIRECTORY_PATH+file.getOriginalFilename());
-        //byte[] arrImage=Files.readAllBytes(pathFile);
-         Files.write(pathFile,file.getBytes());
-         ad.setImageUrl(pathFile.toString());
-         Ads newAd= adsRepository.save(ad);
-         return new ResponseEntity<>(newAd, HttpStatus.OK);
-}
+        Path pathFile = Paths.get(DIRECTORY_PATH + file.getOriginalFilename());
+        Files.write(pathFile, file.getBytes()); // שמירת הקובץ בנתיב
+        ad.setImageUrl(pathFile.toString()); // עדכון השדה בכתובת הנתיב
+        Ads newAd = adsRepository.save(ad); // שמירת המודעה ב-DB
+        return new ResponseEntity<>(newAd, HttpStatus.OK);
+    }
+
 
 //public ResponseEntity<Ads>
 
