@@ -33,7 +33,7 @@ public class AdsController {
     @Autowired
     private CategoriesRepository categoriesRepository;
 
-    private static final String UPLOAD_DIR = "/Project_Moriya_React/images/";  // נתיב אחסון התמונות
+    private static final String UPLOAD_DIR = "/Project_Moriya_React/public/images/";  // נתיב אחסון התמונות
 
 
     @Autowired
@@ -45,17 +45,44 @@ public class AdsController {
     public ResponseEntity<Ads> upload(@RequestPart("ad") Ads ad,
                                       @RequestPart("image") MultipartFile file) throws IOException {
         System.out.println("Received Ad: " + ad);
-        System.out.println("Received File: " + file.getOriginalFilename());
-        if (ad == null || file.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // טיפול בשגיאה אם יש שדות חסרים
+        if (ad == null) {
+            System.out.println("Ad is null");
+        }
+        System.out.println("Received File: " + (file != null ? file.getOriginalFilename() : "File is null"));
+
+        if (file == null || file.isEmpty()) {
+            System.out.println("File is empty or null");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         Path pathFile = Paths.get(DIRECTORY_PATH + file.getOriginalFilename());
-        Files.write(pathFile, file.getBytes()); // שמירת הקובץ בנתיב
-        ad.setImageUrl(pathFile.toString()); // עדכון השדה בכתובת הנתיב
-        Ads newAd = adsRepository.save(ad); // שמירת המודעה ב-DB
+        Files.write(pathFile, file.getBytes());
+        ad.setImageUrl(pathFile.toString());
+        System.out.println("Ad before save: " + ad);
+        Ads newAd = adsRepository.save(ad);
+        System.out.println("Ad saved: " + newAd);
         return new ResponseEntity<>(newAd, HttpStatus.OK);
     }
+
+//    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public ResponseEntity<Ads> upload(@RequestPart("ad") Ads ad,
+//                                      @RequestPart("image") MultipartFile file) throws IOException {
+//try {
+//    String pathFile =DIRECTORY_PATH + file.getOriginalFilename();
+//
+//    Path pathN = Paths.get(pathFile);
+//    Files.write(pathN, file.getBytes()); // שמירת הקובץ בנתיב
+//    ad.setImageUrl(pathFile);
+//
+//    Ads newAd = adsRepository.save(ad); // שמירת המודעה ב-DB
+//    return new ResponseEntity<>(newAd, HttpStatus.OK);
+//
+//}catch (Exception e){
+//    return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//}
+//
+//
+//    }
 
 
 //public ResponseEntity<Ads>

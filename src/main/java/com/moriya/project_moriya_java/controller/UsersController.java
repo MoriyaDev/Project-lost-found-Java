@@ -52,7 +52,7 @@ public class UsersController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         usersRepository.save(user);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
    //   @PutMapping("/updateAd/{id}")
