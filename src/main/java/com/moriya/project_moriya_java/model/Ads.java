@@ -40,7 +40,10 @@ public class Ads {
         LOST,
         FOUND
     }
+
+
     private AdType type; // "lost" or "found"
+
     private Boolean status; // true אם רלוונטית, false אם לא
 
 

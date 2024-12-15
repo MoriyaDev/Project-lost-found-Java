@@ -4,12 +4,14 @@ import com.moriya.project_moriya_java.model.Categories;
 import com.moriya.project_moriya_java.service.CategoriesRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@CrossOrigin
 @RestController
 @RequestMapping("/api/categories")
+@CrossOrigin(value = "http://localhost:5173", allowCredentials = "true")
 public class CategoriesController {
 
     private CategoriesRepository categoriesRepository;
@@ -36,11 +38,14 @@ public class CategoriesController {
     }
 
     // Add a new category
+    @PreAuthorize("hasRole('MODERATOR')")
     @PostMapping("/addCategory")
     public ResponseEntity<Categories> addCategory(@RequestBody Categories category) {
+        System.out.println("User is authorized: " + SecurityContextHolder.getContext().getAuthentication().getName());
         Categories newCategory = categoriesRepository.save(category);
         return new ResponseEntity<>(newCategory, HttpStatus.CREATED);
     }
+
 
     // Update an existing category
     @PutMapping("/updateCategory/{id}")

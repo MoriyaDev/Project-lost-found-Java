@@ -20,10 +20,11 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/api/ads")
+@CrossOrigin(value = "http://localhost:5173", allowCredentials = "true")
 public class AdsController {
 
     @Autowired
@@ -41,6 +42,8 @@ public class AdsController {
         this.adsRepository = adsRepository;
     }
 
+
+
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Ads> upload(@RequestPart("ad") Ads ad,
                                       @RequestPart("image") MultipartFile file) throws IOException {
@@ -57,35 +60,12 @@ public class AdsController {
 
         Path pathFile = Paths.get(DIRECTORY_PATH + file.getOriginalFilename());
         Files.write(pathFile, file.getBytes());
-        ad.setImageUrl(pathFile.toString());
+        ad.setImageUrl(file.getOriginalFilename());
         System.out.println("Ad before save: " + ad);
         Ads newAd = adsRepository.save(ad);
         System.out.println("Ad saved: " + newAd);
         return new ResponseEntity<>(newAd, HttpStatus.OK);
     }
-
-//    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//    public ResponseEntity<Ads> upload(@RequestPart("ad") Ads ad,
-//                                      @RequestPart("image") MultipartFile file) throws IOException {
-//try {
-//    String pathFile =DIRECTORY_PATH + file.getOriginalFilename();
-//
-//    Path pathN = Paths.get(pathFile);
-//    Files.write(pathN, file.getBytes()); // שמירת הקובץ בנתיב
-//    ad.setImageUrl(pathFile);
-//
-//    Ads newAd = adsRepository.save(ad); // שמירת המודעה ב-DB
-//    return new ResponseEntity<>(newAd, HttpStatus.OK);
-//
-//}catch (Exception e){
-//    return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//}
-//
-//
-//    }
-
-
-//public ResponseEntity<Ads>
 
 
 
@@ -129,7 +109,7 @@ public class AdsController {
         List<AdsDto> adsDtoList = new ArrayList<>();
         for (Ads ad : adsList) {
             // קריאת קובץ התמונה עבור כל מודעה
-            Path path = Paths.get(ad.getImageUrl());
+            Path path = Paths.get(DIRECTORY_PATH+ ad.getImageUrl());
             byte[] arr = Files.readAllBytes(path);
 
             // יצירת AdsDto והעתקת הנתונים
@@ -200,9 +180,24 @@ public class AdsController {
         if (!id.equals(ad.getId())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
+
+        // שולפים את המודעה הקיימת כדי לשמור על המידע של התמונה
+        Optional<Ads> existingAd = adsRepository.findById(id);
+        if (existingAd.isPresent()) {
+            Ads currentAd = existingAd.get();
+
+            // שומרים את ה-URL של התמונה הקיימת אם לא נשלח ערך חדש
+            if (ad.getImageUrl() == null || ad.getImageUrl().isEmpty()) {
+                ad.setImageUrl(currentAd.getImageUrl());
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         adsRepository.save(ad);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 
     // מחיקת מודעה
     @DeleteMapping("/deleteAd/{id}")

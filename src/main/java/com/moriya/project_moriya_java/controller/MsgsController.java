@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/api/msgs")
+@CrossOrigin(value = "http://localhost:5173", allowCredentials = "true")
 public class MsgsController {
     //הודעות
     @Autowired

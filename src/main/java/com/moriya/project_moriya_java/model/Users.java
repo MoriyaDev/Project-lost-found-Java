@@ -2,7 +2,9 @@ package com.moriya.project_moriya_java.model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Users {
@@ -15,8 +17,19 @@ public class Users {
     private String phone; // user_phone
     private String address; // user_address
 
+    @ManyToMany
+    private Set<Role> roles=new HashSet<>();
+
     @OneToMany(mappedBy = "userId")
     private List<Ads> adsList;
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
     public Long getId() {
         return id;
