@@ -67,7 +67,7 @@ public class WebSecurityConfig {
               authorize.requestMatchers("/h2-console/**").permitAll().
                       requestMatchers("/api/users/sign**").permitAll()
 //                      requestMatchers("/sendMail").permitAll().
-//                      requestMatchers("/api/ads/addAd").permitAll().
+                      .requestMatchers("/api/users/updateUser/**").permitAll()
                       .requestMatchers("/api/users/getUser/**").permitAll()
                      .requestMatchers("/sendMail").permitAll()
                       .requestMatchers("/api/ads/getAllAds").permitAll().

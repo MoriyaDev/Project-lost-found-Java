@@ -1,5 +1,6 @@
 package com.moriya.project_moriya_java.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -20,6 +21,7 @@ public class Users {
     @ManyToMany
     private Set<Role> roles=new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "userId")
     private List<Ads> adsList;
 

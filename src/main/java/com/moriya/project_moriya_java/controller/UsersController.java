@@ -72,11 +72,6 @@ public class UsersController {
         this.usersRepository = usersRepository;
     }
 
-    @GetMapping("/get1")
-    @PreAuthorize("hasRole('USER')")
-    public String get() {
-        return "hello";
-    }
 
 
     // Get all users
@@ -109,14 +104,7 @@ public class UsersController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    //   @PutMapping("/updateAd/{id}")
-    //   public ResponseEntity<?> updateAd(@PathVariable Long id, @RequestBody Ads ad) {
-    //     if (!id.equals(ad.getId())) {
-    //          return new ResponseEntity<>(HttpStatus.CONFLICT);
-    //      }
-    //     adsRepository.save(ad);
-    //     return new ResponseEntity<>(HttpStatus.OK);
-    // }
+
 
 
     // Delete a user
