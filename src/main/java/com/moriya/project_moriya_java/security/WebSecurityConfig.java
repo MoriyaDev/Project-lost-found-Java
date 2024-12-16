@@ -70,7 +70,7 @@ public class WebSecurityConfig {
                       .requestMatchers("/api/users/updateUser/**").permitAll()
                       .requestMatchers("/api/users/getUser/**").permitAll()
                      .requestMatchers("/sendMail").permitAll()
-                      .requestMatchers("/api/ads/getAllAds").permitAll().
+                      .requestMatchers("/api/ads/getAllAds/**").permitAll().
                       requestMatchers("/api/users/login").permitAll();
 
               authorize.anyRequest().authenticated();
