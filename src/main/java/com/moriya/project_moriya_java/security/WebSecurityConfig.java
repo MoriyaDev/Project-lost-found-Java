@@ -66,12 +66,17 @@ public class WebSecurityConfig {
             .authorizeHttpRequests((authorize) -> {
               authorize.requestMatchers("/h2-console/**").permitAll().
                       requestMatchers("/api/users/sign**").permitAll()
-//                      requestMatchers("/sendMail").permitAll().
+                      .requestMatchers("/api/users/login").permitAll()
+                        .requestMatchers("/sendMail").permitAll()
                       .requestMatchers("/api/users/updateUser/**").permitAll()
                       .requestMatchers("/api/users/getUser/**").permitAll()
-                     .requestMatchers("/sendMail").permitAll()
-                      .requestMatchers("/api/ads/getAllAds/**").permitAll().
-                      requestMatchers("/api/users/login").permitAll();
+                      .requestMatchers("/api/users/getAllUsers").permitAll()
+                     .requestMatchers("/api/ads/getAd/**").permitAll()
+                      .requestMatchers("/api/ads/getAllAds/**").permitAll()
+                      .requestMatchers("/api/msgs/get**").permitAll()
+                      .requestMatchers("/api/msgs/getMsgsForAd/**").permitAll()
+                      .requestMatchers("/api/categories/getAllCategories").permitAll()
+              ;
 
               authorize.anyRequest().authenticated();
             })

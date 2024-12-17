@@ -33,13 +33,11 @@ public class MsgsController {
     }
 
 
-    // Get all msgs
     @GetMapping("/getAllMsgs")
     public ResponseEntity<List<Msgs>> getAllMsgs() {
         return new ResponseEntity<>(msgsRepository.findAll(), HttpStatus.OK);
     }
 
-    // Get a specific ad by id
     @GetMapping("/getMsg/{id}")
     public ResponseEntity<Msgs> getAdById(@PathVariable Long id) {
         Msgs msg = msgsRepository.findById(id).orElse(null);
