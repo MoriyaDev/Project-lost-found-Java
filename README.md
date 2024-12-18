@@ -13,17 +13,38 @@
 - **Spring Security**  
 - **H2** (למסד הנתונים)  
 - **React.js** (צד הלקוח)
+- **JWT**
+  
+---
+## קישור לצד לקוח
+[קישור צד לקוח - אתר השבת אבידה](https://github.com/MoriyaDev/Project-lost-found-React.git)  
+```
+https://github.com/MoriyaDev/Project-lost-found-React.git 
+```
 
 ---
+
 ## הוראות התקנה והרצה
 
 ### צד שרת (Backend)
- יש להוריד ולהריץ אתהקוד בסביבת העבודה
-
+ יש להוריד ולהריץ את הקוד בסביבת העבודה
+ 
  ### צד לקוח (frontend)
  1.יש להוריד את הפרויקט
+ ```
+https://github.com/MoriyaDev/Project-lost-found-Java.git
+```
  2.להתקין ע"י פקודת NPM I את הNODE MODELS
+
+```
+npm i
+```
+
 3. להריץ ע"י פקודת NPM RUN DEV
+```
+npm run dev
+```
+
 
 ---
 
@@ -50,7 +71,7 @@
 - **API חיצוני לשליפת ערים**  
   - שילוב API רשמי ממשלת ישראל (GOV) לשליפת רשימת ערים מעודכנת.  
 
-- **API חיצוני של מיל"ל**  
+- **API חיצוני Mail**  
   - שילוב API נוסף לצורך הרחבת יכולות ואינטגרציות חיצוניות במערכת.  
 
 - **צ'אט קבוצתי על מודעה**  
